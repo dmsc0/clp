@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>clp2.ico</ApplicationIcon>
+    <Win32Resource></Win32Resource>
+    <NoWin32Manifest>true</NoWin32Manifest>
+    <StartupObject />
+    <Version>1.2</Version>
+    <Authors>Sima Grigore</Authors>
+    <Company>SG</Company>
+    <Product>Custom license plate</Product>
+    <AssemblyName>Custom license plate</AssemblyName>
+    <RootNamespace>CarPlateView</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Update="blasons.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>blasons.resx</DependentUpon>
+    </Compile>
+    <Compile Update="flags.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>flags.resx</DependentUpon>
+    </Compile>
+    <Compile Update="others.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>others.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="blasons.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>blasons.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="flags.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>flags.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="others.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>others.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
