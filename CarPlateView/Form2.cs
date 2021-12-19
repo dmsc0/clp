@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
+using System.Drawing.Text;
 
 namespace CarPlateView
 {
@@ -24,13 +25,40 @@ namespace CarPlateView
           int heightEllipse
         );
 
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont,
+        IntPtr pdv, [System.Runtime.InteropServices.In] ref uint pcFonts);
+
+        private PrivateFontCollection fonts = new PrivateFontCollection();
+
+        Font myFont;
         public Form2()
         {
             InitializeComponent();
 
-            Region = System.Drawing.Region.FromHrgn(RoundCorner(0, 0, Width, Height, 20, 20));
+            this.Size = new Size(Convert.ToInt32(Screen.PrimaryScreen.WorkingArea.Width * 0.35), Convert.ToInt32(Screen.PrimaryScreen.WorkingArea.Height * 0.3));
+
+            Region = System.Drawing.Region.FromHrgn(RoundCorner(0, 0, this.Size.Width, this.Size.Height, 20, 20));
             this.Text = "Custom license plate";
             loadper.BackColor = Color.FromArgb(200, 255, 255, 255);
+
+            byte[] fontData = fontscoll.VerminVV;
+            IntPtr fontPtr = System.Runtime.InteropServices.Marshal.AllocCoTaskMem(fontData.Length);
+            System.Runtime.InteropServices.Marshal.Copy(fontData, 0, fontPtr, fontData.Length);
+            uint dummy = 0;
+            fonts.AddMemoryFont(fontPtr, fontscoll.VerminVV.Length);
+            AddFontMemResourceEx(fontPtr, (uint)fontscoll.VerminVV.Length, IntPtr.Zero, ref dummy);
+            System.Runtime.InteropServices.Marshal.FreeCoTaskMem(fontPtr);
+
+            myFont = new Font(fonts.Families[0], 20, FontStyle.Bold);
+
+            title.Font = myFont;
+            vers.Font = myFont;
+
+            //SizeF size = new SizeF(Screen.PrimaryScreen.WorkingArea.Width / this.Size.Width, Screen.PrimaryScreen.WorkingArea.Height / this.Size.Height);
+            //this.Scale(size);
+
+            loadbar.Location = new Point(0, this.Height-loadbar.Height);
         }
 
         private void loadscreen_Load(object sender, EventArgs e)
@@ -43,13 +71,13 @@ namespace CarPlateView
         {
             LinearGradientBrush linGrBrush = new LinearGradientBrush(
             new Point(0, 0),
-            new Point(1000, 550),
+            new Point(this.Size.Width, this.Size.Height),
             Color.FromArgb(225, 131, 96, 195),
             Color.FromArgb(225, 46, 191, 145));
 
             Pen pen = new Pen(linGrBrush);
 
-            e.Graphics.FillRectangle(linGrBrush, 0, 0, 1000, 550);
+            e.Graphics.FillRectangle(linGrBrush, 0, 0, this.Size.Width, this.Size.Height);
         }
 
         int tick = 0;

@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
+using System.Drawing.Text;
+
 
 namespace CarPlateView
 {
@@ -24,39 +26,91 @@ namespace CarPlateView
           int heightEllipse
         );
 
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont,
+        IntPtr pdv, [System.Runtime.InteropServices.In] ref uint pcFonts);
+
+        private PrivateFontCollection fonts = new PrivateFontCollection();
+
         public edit()
         {
             InitializeComponent();
 
-            Region = System.Drawing.Region.FromHrgn(RoundCorner(0, 0, Width, Height, 20, 20));
+            this.Size = new Size(Convert.ToInt32(Screen.PrimaryScreen.WorkingArea.Width * 0.84), Convert.ToInt32(Screen.PrimaryScreen.WorkingArea.Height * 0.45));
+
+
+            Region = System.Drawing.Region.FromHrgn(RoundCorner(0, 0, this.Size.Width, this.Size.Height, 20, 20));
 
             init();
+
+            byte[] fontData = fontscoll.theboldfont;
+            IntPtr fontPtr = System.Runtime.InteropServices.Marshal.AllocCoTaskMem(fontData.Length);
+            System.Runtime.InteropServices.Marshal.Copy(fontData, 0, fontPtr, fontData.Length);
+            uint dummy = 0;
+            fonts.AddMemoryFont(fontPtr, fontscoll.theboldfont.Length);
+            AddFontMemResourceEx(fontPtr, (uint)fontscoll.theboldfont.Length, IntPtr.Zero, ref dummy);
+            System.Runtime.InteropServices.Marshal.FreeCoTaskMem(fontPtr);
+
+            title.Font = new Font(fonts.Families[0], 10, FontStyle.Bold);
+
+            fontData = fontscoll.KREDIT1;
+            fontPtr = System.Runtime.InteropServices.Marshal.AllocCoTaskMem(fontData.Length);
+            System.Runtime.InteropServices.Marshal.Copy(fontData, 0, fontPtr, fontData.Length);
+            dummy = 0;
+            fonts.AddMemoryFont(fontPtr, fontscoll.KREDIT1.Length);
+            AddFontMemResourceEx(fontPtr, (uint)fontscoll.KREDIT1.Length, IntPtr.Zero, ref dummy);
+            System.Runtime.InteropServices.Marshal.FreeCoTaskMem(fontPtr);
+
+            editb.Font = new Font(fonts.Families[0], 8, FontStyle.Regular);
+            cntry.Font = new Font(fonts.Families[0], 14, FontStyle.Regular);
+
+            fontData = fontscoll.Neon;
+            fontPtr = System.Runtime.InteropServices.Marshal.AllocCoTaskMem(fontData.Length);
+            System.Runtime.InteropServices.Marshal.Copy(fontData, 0, fontPtr, fontData.Length);
+            dummy = 0;
+            fonts.AddMemoryFont(fontPtr, fontscoll.Neon.Length);
+            AddFontMemResourceEx(fontPtr, (uint)fontscoll.Neon.Length, IntPtr.Zero, ref dummy);
+            System.Runtime.InteropServices.Marshal.FreeCoTaskMem(fontPtr);
+
+            info.Font = new Font(fonts.Families[1], 10, FontStyle.Bold);
+            info2.Font = new Font(fonts.Families[1], 10, FontStyle.Bold);
+            info3.Font = new Font(fonts.Families[1], 10, FontStyle.Bold);
+
+            exit.Location = new Point(this.Size.Width-exit.Width-10, exit.Location.Y);
+            cplate.Location = new Point((this.Size.Width - cplate.Width)/2, cplate.Location.Y);
+            edtext.Location = new Point(cplate.Location.X + cplate.Width - edtext.Width - 10, edtext.Location.Y);
+            screen.Location = new Point(edtext.Location.X - screen.Width - 20, screen.Location.Y);
+
+            info.Location = new Point(cplate.Location.X, cplate.Location.Y + cplate.Height + 30);
+            info2.Location = new Point(cplate.Location.X + info.Width + 40, cplate.Location.Y + cplate.Height + 30);
+            info3.Location = new Point(info2.Location.X + info2.Width + 40, cplate.Location.Y + cplate.Height + 30);
+
         }
         private void titlebar_Paint(object sender, PaintEventArgs e)
         {
             
             LinearGradientBrush linGrBrush = new LinearGradientBrush(
             new Point(0, 0),
-            new Point(2500, 860),
+            new Point(this.Size.Width, this.Size.Height),
             Color.FromArgb(225, 201, 75, 75),
             Color.FromArgb(225, 75, 19, 79));
 
             Pen pen = new Pen(linGrBrush);
 
-            e.Graphics.FillRectangle(linGrBrush, 0, 0, 2500, 860);
+            e.Graphics.FillRectangle(linGrBrush, 0, 0, this.Size.Width, this.Size.Height);
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             LinearGradientBrush linGrBrush = new LinearGradientBrush(
             new Point(0, 0),
-            new Point(2500, 860),
+            new Point(this.Size.Width, this.Size.Height),
             Color.FromArgb(225, 254, 164, 127),
             Color.FromArgb(225, 179, 55, 113));
 
             Pen pen = new Pen(linGrBrush);
     
-            e.Graphics.FillRectangle(linGrBrush, 0, 0, 2500, 860);
+            e.Graphics.FillRectangle(linGrBrush, 0, 0, this.Size.Width, this.Size.Height);
         }
 
         

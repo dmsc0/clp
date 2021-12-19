@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
-
+using System.Drawing.Text;
 
 namespace CarPlateView
 {
@@ -25,11 +25,36 @@ namespace CarPlateView
          int heightEllipse
         );
 
-        
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont,
+        IntPtr pdv, [System.Runtime.InteropServices.In] ref uint pcFonts);
+
+        private PrivateFontCollection fonts = new PrivateFontCollection();
+
         public edittext()
         {
             InitializeComponent();
             Region = System.Drawing.Region.FromHrgn(RoundCorner(0, 0, Width, Height, 20, 20));
+
+            byte[] fontData = fontscoll.Vulpes;
+            IntPtr fontPtr = System.Runtime.InteropServices.Marshal.AllocCoTaskMem(fontData.Length);
+            System.Runtime.InteropServices.Marshal.Copy(fontData, 0, fontPtr, fontData.Length);
+            uint dummy = 0;
+            fonts.AddMemoryFont(fontPtr, fontscoll.Vulpes.Length);
+            AddFontMemResourceEx(fontPtr, (uint)fontscoll.Vulpes.Length, IntPtr.Zero, ref dummy);
+            System.Runtime.InteropServices.Marshal.FreeCoTaskMem(fontPtr);
+
+            info.Font = new Font(fonts.Families[0], 9, FontStyle.Bold);
+
+            fontData = fontscoll.Neon;
+            fontPtr = System.Runtime.InteropServices.Marshal.AllocCoTaskMem(fontData.Length);
+            System.Runtime.InteropServices.Marshal.Copy(fontData, 0, fontPtr, fontData.Length);
+            dummy = 0;
+            fonts.AddMemoryFont(fontPtr, fontscoll.Neon.Length);
+            AddFontMemResourceEx(fontPtr, (uint)fontscoll.Neon.Length, IntPtr.Zero, ref dummy);
+            System.Runtime.InteropServices.Marshal.FreeCoTaskMem(fontPtr);
+
+            done.Font = new Font(fonts.Families[0], 9);
         }
         
         private void titlebar_Paint(object sender, PaintEventArgs e)

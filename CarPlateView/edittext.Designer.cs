@@ -92,6 +92,7 @@ namespace CarPlateView
             this.done.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.done.FlatAppearance.BorderSize = 0;
             this.done.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.done.Font = new System.Drawing.Font("Neon 80s", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.done.ForeColor = System.Drawing.Color.White;
             this.done.Location = new System.Drawing.Point(283, 149);
             this.done.Name = "done";

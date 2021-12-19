@@ -39,8 +39,8 @@ namespace CarPlateView
             this.editb = new System.Windows.Forms.Button();
             this.edtext = new System.Windows.Forms.Panel();
             this.screen = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.info2 = new System.Windows.Forms.Label();
+            this.info3 = new System.Windows.Forms.Label();
             this.titlebar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -163,32 +163,32 @@ namespace CarPlateView
             this.screen.TabIndex = 6;
             this.screen.Click += new System.EventHandler(this.screen_Click);
             // 
-            // label1
+            // info2
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Neon 80s", 10.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(820, 650);
-            this.label1.Name = "label1";
-            this.label1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label1.Size = new System.Drawing.Size(640, 145);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "To change the entire text: \r\n\r\n    1. Click on the button that has a pencil on it" +
+            this.info2.AutoSize = true;
+            this.info2.BackColor = System.Drawing.Color.Transparent;
+            this.info2.Font = new System.Drawing.Font("Neon 80s", 10.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.info2.ForeColor = System.Drawing.Color.White;
+            this.info2.Location = new System.Drawing.Point(820, 650);
+            this.info2.Name = "info2";
+            this.info2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.info2.Size = new System.Drawing.Size(640, 145);
+            this.info2.TabIndex = 7;
+            this.info2.Text = "To change the entire text: \r\n\r\n    1. Click on the button that has a pencil on it" +
     ".\r\n    2. Enter your text.\r\n    3. Click on the orange \'done\' button.";
             // 
-            // label2
+            // info3
             // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Neon 80s", 10.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(1486, 650);
-            this.label2.Name = "label2";
-            this.label2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label2.Size = new System.Drawing.Size(565, 145);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "To change the country: \r\n\r\n    1. Click on the gray \'edit\' button.\r\n    2. Press " +
+            this.info3.AutoSize = true;
+            this.info3.BackColor = System.Drawing.Color.Transparent;
+            this.info3.Font = new System.Drawing.Font("Neon 80s", 10.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.info3.ForeColor = System.Drawing.Color.White;
+            this.info3.Location = new System.Drawing.Point(1486, 650);
+            this.info3.Name = "info3";
+            this.info3.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.info3.Size = new System.Drawing.Size(565, 145);
+            this.info3.TabIndex = 8;
+            this.info3.Text = "To change the country: \r\n\r\n    1. Click on the gray \'edit\' button.\r\n    2. Press " +
     "A or D to change the country.\r\n    3. Click on the gray \'save\' button.";
             // 
             // edit
@@ -197,8 +197,8 @@ namespace CarPlateView
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(2500, 860);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.info3);
+            this.Controls.Add(this.info2);
             this.Controls.Add(this.screen);
             this.Controls.Add(this.edtext);
             this.Controls.Add(this.cntry);
@@ -231,8 +231,8 @@ namespace CarPlateView
         private System.Windows.Forms.Panel edtext;
         private System.Windows.Forms.Panel screen;
         private System.Windows.Forms.Label title;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label info2;
+        private System.Windows.Forms.Label info3;
     }
 }
 

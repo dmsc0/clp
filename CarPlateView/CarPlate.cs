@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-
+using System.Drawing.Text;
 // v 1.2
 
 namespace CarPlateView
@@ -20,6 +20,12 @@ namespace CarPlateView
           int heightEllipse
         );
 
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont,
+        IntPtr pdv, [System.Runtime.InteropServices.In] ref uint pcFonts);
+
+        private PrivateFontCollection fonts = new PrivateFontCollection();
+        Font myFont;
         public CarPlate()
         {
             InitializeComponent();
@@ -27,6 +33,26 @@ namespace CarPlateView
             Region = System.Drawing.Region.FromHrgn(RoundCorner(0, 0, Width, Height, 50, 50));
 
             init();
+
+            byte[] fontData = fontscoll.BEBAS;
+            IntPtr fontPtr = System.Runtime.InteropServices.Marshal.AllocCoTaskMem(fontData.Length);
+            System.Runtime.InteropServices.Marshal.Copy(fontData, 0, fontPtr, fontData.Length);
+            uint dummy = 0;
+            fonts.AddMemoryFont(fontPtr, fontscoll.BEBAS.Length);
+            AddFontMemResourceEx(fontPtr, (uint)fontscoll.BEBAS.Length, IntPtr.Zero, ref dummy);
+            System.Runtime.InteropServices.Marshal.FreeCoTaskMem(fontPtr);
+
+            rosign.Font = new Font(fonts.Families[0], 28);
+
+            fontData = fontscoll.KREDIT1;
+            fontPtr = System.Runtime.InteropServices.Marshal.AllocCoTaskMem(fontData.Length);
+            System.Runtime.InteropServices.Marshal.Copy(fontData, 0, fontPtr, fontData.Length);
+            dummy = 0;
+            fonts.AddMemoryFont(fontPtr, fontscoll.KREDIT1.Length);
+            AddFontMemResourceEx(fontPtr, (uint)fontscoll.KREDIT1.Length, IntPtr.Zero, ref dummy);
+            System.Runtime.InteropServices.Marshal.FreeCoTaskMem(fontPtr);
+
+            myFont = new Font(fonts.Families[1], 5);
         }
 
         List<string> chars = new List<string>();
@@ -145,7 +171,7 @@ namespace CarPlateView
         string edsa = "edit";
         private void edit_Paint(object sender, PaintEventArgs e)
         {
-            Font f1 = new Font("Kredit", 5);
+            Font f1 = myFont;
             SolidBrush col = new SolidBrush(Color.Black);
 
             SolidBrush brush = new SolidBrush(Color.FromArgb(225, 254, 164, 127));
