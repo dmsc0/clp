@@ -166,8 +166,11 @@ namespace CarPlateView
             Pen white = new Pen(Color.White, 3);
             white.SetLineCap(LineCap.Round, LineCap.Round, DashCap.Round);
 
-            e.Graphics.DrawLine(white, 5, 5, 35, 35);
-            e.Graphics.DrawLine(white, 35, 5, 5, 35);
+            int w = exit.Size.Width*95/100;
+            int x = exit.Size.Width * 5 / 100;
+
+            e.Graphics.DrawLine(white, x, x, w, w);
+            e.Graphics.DrawLine(white, w, x, x, w);
         }
 
         private void exit_Click(object sender, EventArgs e)
