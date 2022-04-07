@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Drawing.Text;
+using System.Runtime;
 // v 1.2
 
 namespace CarPlateView
@@ -53,6 +54,9 @@ namespace CarPlateView
             System.Runtime.InteropServices.Marshal.FreeCoTaskMem(fontPtr);
 
             myFont = new Font(fonts.Families[1], 5);
+
+            edit.Size = new Size(letters.Width * 5 / 100, letters.Height * 10 / 100);
+            edit.Location = new Point((int)(letters.Width * 102.5 / 100), -(edit.Height * 5 / 100));
         }
 
         List<string> chars = new List<string>();
@@ -176,9 +180,9 @@ namespace CarPlateView
 
             SolidBrush brush = new SolidBrush(Color.FromArgb(225, 254, 164, 127));
 
-            Point p1 = new Point(5, 5);
-            Point p2 = new Point(80, 5);
-            Point p3 = new Point(80, 45);
+            Point p1 = new Point(0, 0);
+            Point p2 = new Point(edit.Width * 90 / 100, 0);
+            Point p3 = new Point(edit.Width * 90 / 100, edit.Height * 90 / 100);
 
             Point[] points =
             {
@@ -189,8 +193,11 @@ namespace CarPlateView
 
             e.Graphics.FillPolygon(brush, points);
 
-            e.Graphics.RotateTransform(31);
-            e.Graphics.DrawString(edsa, f1, col, 33, -21);
+            double k = Math.Asin(Convert.ToDouble(edit.Height) / Convert.ToDouble(edit.Width));
+            k = k / (Math.PI / 180);
+
+            e.Graphics.RotateTransform((float)k);
+            e.Graphics.DrawString(edsa, f1, col, edit.Width / 2 - edit.Width* 5 / 100 , -(edit.Height / 2 - edit.Height * 5 / 100));
         }
 
         private void edit_KeyDown(object sender, KeyEventArgs e)

@@ -36,9 +36,9 @@ namespace CarPlateView
         {
             InitializeComponent();
 
-            this.Size = new Size(Convert.ToInt32(Screen.PrimaryScreen.WorkingArea.Width * 0.84), Convert.ToInt32(Screen.PrimaryScreen.WorkingArea.Height * 0.45));
+            this.Size = new Size(Convert.ToInt32(Screen.PrimaryScreen.WorkingArea.Width * 0.84), Convert.ToInt32(Screen.PrimaryScreen.WorkingArea.Height * 0.5));
 
-
+            editb.Width = cntry.Width;
             Region = System.Drawing.Region.FromHrgn(RoundCorner(0, 0, this.Size.Width, this.Size.Height, 20, 20));
 
             init();
@@ -85,6 +85,10 @@ namespace CarPlateView
             info2.Location = new Point(cplate.Location.X + info.Width + 40, cplate.Location.Y + cplate.Height + 30);
             info3.Location = new Point(info2.Location.X + info2.Width + 40, cplate.Location.Y + cplate.Height + 30);
 
+
+            int k = titlebar.Height - 10;
+            exit.Size = new Size(k, k);
+            exit.Location = new Point(titlebar.Width - (int)(titlebar.Width * 0.5 / 100) - k, titlebar.Height * 5 / 100);
         }
         private void titlebar_Paint(object sender, PaintEventArgs e)
         {
@@ -163,11 +167,11 @@ namespace CarPlateView
 
         private void exit_Paint(object sender, PaintEventArgs e)
         {
-            Pen white = new Pen(Color.White, 3);
+            Pen white = new Pen(Color.White, 2);
             white.SetLineCap(LineCap.Round, LineCap.Round, DashCap.Round);
 
-            int w = exit.Size.Width*95/100;
-            int x = exit.Size.Width * 5 / 100;
+            int w = exit.Size.Width* 90 / 100;
+            int x = exit.Size.Width * 10 / 100;
 
             e.Graphics.DrawLine(white, x, x, w, w);
             e.Graphics.DrawLine(white, w, x, x, w);
